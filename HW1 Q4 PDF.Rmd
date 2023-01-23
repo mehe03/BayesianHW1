@@ -1,0 +1,56 @@
+---
+title: "HW1 Q4"
+output: html_document
+date: "2023-01-23"
+---
+
+```{r library}
+library(tidyverse)
+```
+
+### Part B
+```{r function}
+calculate <- function(theta_one, y_one_given_theta_one, y_one_given_theta_zero, y) {
+  
+  if(y == 1){
+    result = y_one_given_theta_one*theta_one/
+                  ( y_one_given_theta_one*theta_one + (1 - y_one_given_theta_one)*(1-theta_one))
+                    
+  } 
+  
+  else if ( y == 0) {
+    result = (1 - y_one_given_theta_zero)*(1 - theta_one)/
+                  ((1 - y_one_given_theta_zero)*(1 - theta_one)+ y_one_given_theta_one*(theta_one))
+  }
+  return(result)
+}
+```
+
+
+### Part C
+```{r testing function}
+
+calculate(0.001, 0.95,0.05,1 )
+```
+
+
+###Part D
+
+The value $\mathrm{P}(y = 1 \mid \theta = 1)$ indicates the probability of test giving a positive result (result indicating the individual has the disease) when he or she truly has the said disease. A value of 0.95 would mean that 95% of the time, the result will correctly tell the infected individual that they have the disease. It is called the True Positive Rate or Recall
+
+$\mathrm{P}(\theta = 1 \mid y = 1)$ is called the Positive Predictive Value or Precision. It is the probability of individual who tested positive to actually have the disease. A value of 0.0187 would indicate that if the test was done on an individual and tested positive, there is a 1.87% that the individual actually has the disease.
+
+The Precision and Recall are related by Bayes' Theorem.
+
+$\mathrm{P}(\theta = 1 \mid y = 1) = \frac{\mathrm{P}(y = 1 \mid \theta = 1) * \mathrm{P}(\theta = 1)} {\mathrm{P}(y)} $ 
+
+This shows that the results are no contradictory since a large false positive rate would lead to inverse results. One could work out the formula for the other way and find similar results with large false negative rate.
+
+### Part E
+
+```{r results}
+
+calculate( 0.001, 0.80, 0.05,1)
+calculate( 0.01, 0.95, 0.05,1)
+calculate( 0.01, 0.80, 0.05,1)
+```
