@@ -14,13 +14,13 @@ calculate <- function(theta_one, y_one_given_theta_one, y_one_given_theta_zero, 
   
   if(y == 1){
     result = y_one_given_theta_one*theta_one/
-                  ( y_one_given_theta_one*theta_one + (1 - y_one_given_theta_one)*(1-theta_one))
+                  ( y_one_given_theta_one*theta_one + (y_one_given_theta_zero)*(1-theta_one))
                     
   } 
   
   else if ( y == 0) {
     result = (1 - y_one_given_theta_zero)*(1 - theta_one)/
-                  ((1 - y_one_given_theta_zero)*(1 - theta_one)+ y_one_given_theta_one*(theta_one))
+                  ((y_one_given_theta_zero)*(1 - theta_one)+ y_one_given_theta_one*(theta_one))
   }
   return(result)
 }
@@ -34,7 +34,8 @@ calculate(0.001, 0.95,0.05,1 )
 ```
 
 
-###Part D
+
+### Part D
 
 The value $\mathrm{P}(y = 1 \mid \theta = 1)$ indicates the probability of test giving a positive result (result indicating the individual has the disease) when he or she truly has the said disease. A value of 0.95 would mean that 95% of the time, the result will correctly tell the infected individual that they have the disease. It is called the True Positive Rate or Recall
 
@@ -54,3 +55,6 @@ calculate( 0.001, 0.80, 0.05,1)
 calculate( 0.01, 0.95, 0.05,1)
 calculate( 0.01, 0.80, 0.05,1)
 ```
+When $\theta = 0.01$, a medical test that is more precise (testing positive when a tested individual has the disease), $\mathrm{P}(y = 1 \mid \theta = 1)$ = 0.95 will give more accurate results of whether the person truly has disease given that they tested positive. A less precise medical test with $\mathrm{P}(y = 1 \mid \theta = 1)$ = 0.80 clearly has a lower probability of correctly guessing whether a tested individual has the disease given that they tested positive as shown in part E ii) vs E iii)
+
+Similarly with the same precision of the medical tests of giving accurate results, let's say $\mathrm{P}(y = 1 \mid \theta = 1)$ = 0.80, the rarer the prevalence of the the disease, the harder it is to accurately say they have disease when they tested positive. Refer to part E iii) vs part E i).

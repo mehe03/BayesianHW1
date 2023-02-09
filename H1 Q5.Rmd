@@ -1,0 +1,86 @@
+---
+title: "H1 Q5"
+output: html_document
+date: "2023-01-29"
+---
+
+```{r library}
+library(tidyverse)
+```
+
+### Part A
+
+```{r data}
+
+mmdark.dat = read.table("mmdark2023.txt",header=TRUE)
+```
+
+```{r sum}
+mmdarksum = mmdark.dat %>% mutate(notblue = rowSums(mmdark.dat)-blue) %>% select(blue,notblue)
+
+apply(mmdarksum,2,sum)
+```
+There were 169 blue and 461 non-blue M&Ms.
+
+
+### Part D
+```{r data2017}
+
+mmdark.dat17 = read.table("mmdark2017.txt",header=TRUE)
+```
+
+```{r sum2017}
+mmdarksum17 = mmdark.dat17 %>% mutate(notblue = rowSums(mmdark.dat17)-blue) %>% select(blue,notblue)
+
+apply(mmdarksum17,2,sum)
+```
+### Part F
+#### ii)
+```{r CI}
+qbeta(0.025,318,980)
+qbeta(0.975,318,980)
+```
+
+
+#Part G
+
+```{r plots}
+# placenta.R - show likelihood, prior, posterior from placenta previa example
+# (Gelman et al p. 43-45).
+plot.beta <- function(alpha, bbeta, y, n) {
+  
+  
+# arguments: alpha and bbeta are hyperparameters for beta prior,
+# and y and n are observed successes and observed total from data
+theta <- seq(0,.60,.001) ### values for x-axis
+
+# dbeta(x,shape1,shape2,ncp=0,log=F), where x=vector of quantiles,
+# shape1=alpha, shape2=bbeta, ncp=noncentrality param, and if log=T it
+# gives probabilities as log(p)
+
+ttitle <- paste0("Prior: alpha=",alpha,", beta=",bbeta)
+
+plot(theta,dbeta(theta,y+alpha,n-y+bbeta),type="n",bty="l",
+xlab="theta",ylab="", cex.lab=1.4, main=ttitle)
+# Likelihood
+lines(theta,dbeta(theta,y,n-y), lwd=2,col="red",lty=1)
+# Prior
+lines(theta,dbeta(theta,alpha,bbeta), lwd=2,col="blue",lty=3)
+# Posterior
+lines(theta,dbeta(theta,(y+alpha),(n-y+bbeta)),lwd=4,col="purple",lty=2)
+legend("topright",c("Prior","Likelihood","Posterior"),lty=c(3, 1, 2),
+col=c("blue","red","purple"),lwd=c(2,2,2),cex=1)
+}
+
+
+pdf("placenta.pdf")
+
+plot.beta(6,28,169,630)
+plot.beta(149,519,169,630)
+
+mtext("Data: y=169,n=630",side=3,outer=T,cex=1.6,line=0)
+dev.off()
+```
+The prior is flatter, so the posterior is very influenced by the likelihood (data).
+
+The prior and likelihood are equally informatives since they are both sharp, so the posterior falls in between. 

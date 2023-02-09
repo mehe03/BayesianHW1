@@ -10,9 +10,9 @@
 
 
 
-<meta name="date" content="2023-01-23" />
+<meta name="date" content="2023-01-29" />
 
-<title>HW1 Q4</title>
+<title>H1 Q5</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -362,8 +362,8 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">HW1 Q4</h1>
-<h4 class="date">2023-01-23</h4>
+<h1 class="title toc-ignore">H1 Q5</h1>
+<h4 class="date">2023-01-29</h4>
 
 </div>
 
@@ -377,71 +377,76 @@ pre code {
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div id="part-b" class="section level3">
-<h3>Part B</h3>
-<pre class="r"><code>calculate &lt;- function(theta_one, y_one_given_theta_one, y_one_given_theta_zero, y) {
-  
-  if(y == 1){
-    result = y_one_given_theta_one*theta_one/
-                  ( y_one_given_theta_one*theta_one + (y_one_given_theta_zero)*(1-theta_one))
-                    
-  } 
-  
-  else if ( y == 0) {
-    result = (1 - y_one_given_theta_zero)*(1 - theta_one)/
-                  ((y_one_given_theta_zero)*(1 - theta_one)+ y_one_given_theta_one*(theta_one))
-  }
-  return(result)
-}</code></pre>
-</div>
-<div id="part-c" class="section level3">
-<h3>Part C</h3>
-<pre class="r"><code>calculate(0.001, 0.95,0.05,1 )</code></pre>
-<pre><code>## [1] 0.01866405</code></pre>
+<div id="part-a" class="section level3">
+<h3>Part A</h3>
+<pre class="r"><code>mmdark.dat = read.table(&quot;mmdark2023.txt&quot;,header=TRUE)</code></pre>
+<pre class="r"><code>mmdarksum = mmdark.dat %&gt;% mutate(notblue = rowSums(mmdark.dat)-blue) %&gt;% select(blue,notblue)
+
+apply(mmdarksum,2,sum)</code></pre>
+<pre><code>##    blue notblue 
+##     169     461</code></pre>
+<p>There were 169 blue and 461 non-blue M&amp;Ms.</p>
 </div>
 <div id="part-d" class="section level3">
 <h3>Part D</h3>
-<p>The value <span class="math inline">\(\mathrm{P}(y = 1 \mid \theta =
-1)\)</span> indicates the probability of test giving a positive result
-(result indicating the individual has the disease) when he or she truly
-has the said disease. A value of 0.95 would mean that 95% of the time,
-the result will correctly tell the infected individual that they have
-the disease. It is called the True Positive Rate or Recall</p>
-<p><span class="math inline">\(\mathrm{P}(\theta = 1 \mid y =
-1)\)</span> is called the Positive Predictive Value or Precision. It is
-the probability of individual who tested positive to actually have the
-disease. A value of 0.0187 would indicate that if the test was done on
-an individual and tested positive, there is a 1.87% that the individual
-actually has the disease.</p>
-<p>The Precision and Recall are related by Bayes’ Theorem.</p>
-<p>$(= 1 y = 1) = {(y)} $</p>
-<p>This shows that the results are no contradictory since a large false
-positive rate would lead to inverse results. One could work out the
-formula for the other way and find similar results with large false
-negative rate.</p>
+<pre class="r"><code>mmdark.dat17 = read.table(&quot;mmdark2017.txt&quot;,header=TRUE)</code></pre>
+<pre class="r"><code>mmdarksum17 = mmdark.dat17 %&gt;% mutate(notblue = rowSums(mmdark.dat17)-blue) %&gt;% select(blue,notblue)
+
+apply(mmdarksum17,2,sum)</code></pre>
+<pre><code>##    blue notblue 
+##     148     518</code></pre>
 </div>
-<div id="part-e" class="section level3">
-<h3>Part E</h3>
-<pre class="r"><code>calculate( 0.001, 0.80, 0.05,1)</code></pre>
-<pre><code>## [1] 0.01576355</code></pre>
-<pre class="r"><code>calculate( 0.01, 0.95, 0.05,1)</code></pre>
-<pre><code>## [1] 0.1610169</code></pre>
-<pre class="r"><code>calculate( 0.01, 0.80, 0.05,1)</code></pre>
-<pre><code>## [1] 0.1391304</code></pre>
-<p>When <span class="math inline">\(\theta = 0.01\)</span>, a medical
-test that is more precise (testing positive when a tested individual has
-the disease), <span class="math inline">\(\mathrm{P}(y = 1 \mid \theta =
-1)\)</span> = 0.95 will give more accurate results of whether the person
-truly has disease given that they tested positive. A less precise
-medical test with <span class="math inline">\(\mathrm{P}(y = 1 \mid
-\theta = 1)\)</span> = 0.80 clearly has a lower probability of correctly
-guessing whether a tested individual has the disease given that they
-tested positive as shown in part E ii) vs E iii)</p>
-<p>Similarly with the same precision of the medical tests of giving
-accurate results, let’s say <span class="math inline">\(\mathrm{P}(y = 1
-\mid \theta = 1)\)</span> = 0.80, the rarer the prevalence of the the
-disease, the harder it is to accurately say they have disease when they
-tested positive. Refer to part E iii) vs part E i).</p>
+<div id="part-f" class="section level3">
+<h3>Part F</h3>
+<div id="ii" class="section level4">
+<h4>ii)</h4>
+<pre class="r"><code>qbeta(0.025,318,980)</code></pre>
+<pre><code>## [1] 0.2219823</code></pre>
+<pre class="r"><code>qbeta(0.975,318,980)</code></pre>
+<pre><code>## [1] 0.2687466</code></pre>
+<p>#Part G</p>
+<pre class="r"><code># placenta.R - show likelihood, prior, posterior from placenta previa example
+# (Gelman et al p. 43-45).
+plot.beta &lt;- function(alpha, bbeta, y, n) {
+  
+  
+# arguments: alpha and bbeta are hyperparameters for beta prior,
+# and y and n are observed successes and observed total from data
+theta &lt;- seq(0,.60,.001) ### values for x-axis
+
+# dbeta(x,shape1,shape2,ncp=0,log=F), where x=vector of quantiles,
+# shape1=alpha, shape2=bbeta, ncp=noncentrality param, and if log=T it
+# gives probabilities as log(p)
+
+ttitle &lt;- paste0(&quot;Prior: alpha=&quot;,alpha,&quot;, beta=&quot;,bbeta)
+
+plot(theta,dbeta(theta,y+alpha,n-y+bbeta),type=&quot;n&quot;,bty=&quot;l&quot;,
+xlab=&quot;theta&quot;,ylab=&quot;&quot;, cex.lab=1.4, main=ttitle)
+# Likelihood
+lines(theta,dbeta(theta,y,n-y), lwd=2,col=&quot;red&quot;,lty=1)
+# Prior
+lines(theta,dbeta(theta,alpha,bbeta), lwd=2,col=&quot;blue&quot;,lty=3)
+# Posterior
+lines(theta,dbeta(theta,(y+alpha),(n-y+bbeta)),lwd=4,col=&quot;purple&quot;,lty=2)
+legend(&quot;topright&quot;,c(&quot;Prior&quot;,&quot;Likelihood&quot;,&quot;Posterior&quot;),lty=c(3, 1, 2),
+col=c(&quot;blue&quot;,&quot;red&quot;,&quot;purple&quot;),lwd=c(2,2,2),cex=1)
+}
+
+
+pdf(&quot;placenta.pdf&quot;)
+
+plot.beta(6,28,169,630)
+plot.beta(149,519,169,630)
+
+mtext(&quot;Data: y=169,n=630&quot;,side=3,outer=T,cex=1.6,line=0)
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<p>The prior is flatter, so the posterior is very influenced by the
+likelihood (data).</p>
+<p>The prior and likelihood are equally informatives since they are both
+sharp, so the posterior falls in between.</p>
+</div>
 </div>
 
 
